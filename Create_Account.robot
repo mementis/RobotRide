@@ -4,16 +4,26 @@ Library           SeleniumLibrary
 *** Variables ***
 ${LOGIN URL}      http://automationpractice.com/index.php?controller=authentication&back=my-account
 ${BROWSER}        Chrome
-${emailnew}       trol485@yahoo.com
+${emailnew}       trol45826@yahoo.com
 ${firstname}      Mara
 ${lastname}       Popara
-${passwordcreate}    kokoska
 ${address}        3003 Kerbey Ln
 ${City}           Austin
 ${postcode}       78702
 ${mobile}         2025550130
 ${formElement}    //*[@id="account-creation_form"]
 ${submitAccount}    //*[@id="submitAccount"]
+${firstnameElement}    //*[@id="customer_firstname"]
+${lastnameElement}    //*[@id="customer_lastname"]
+${passwordNew}    kokoska
+${passwordElement}    //*[@id="passwd"]
+${addressElement}    //*[@id="address1"]
+${cityElement}    //*[@id="city"]
+${stateElement}    //*[@id="id_state"]
+${postcodeElement}    //*[@id="postcode"]
+${countryElement}    //*[@id="id_country"]
+${mobileElement}    //*[@id="phone_mobile"]
+${formBox}        //*[@id="account-creation_form"]/div[1]
 
 *** Test Cases ***
 Create Account
@@ -21,7 +31,7 @@ Create Account
     Input Username    ${emailnew}
     Submit Credentials
     Populate Create Account Form    ${formElement}    form
-    Click Button    ${submitAccount}
+    Submit Account
     Account Page Should Be Open
 
 *** Keywords ***
@@ -41,13 +51,16 @@ Account Page Should Be Open
 
 Populate Create Account Form
     [Arguments]    ${arg1}    ${arg2}
-    Wait Until Element Is Enabled    //*[@id="account-creation_form"]/div[1]
-    Input Text    //*[@id="customer_firstname"]    ${firstname}
-    Input Text    //*[@id="customer_lastname"]    ${lastname}
-    Input Text    //*[@id="passwd"]    ${passwordcreate}
-    Input Text    //*[@id="address1"]    ${address}
-    Input Text    //*[@id="city"]    ${City}
-    Select From List By Index    //*[@id="id_state"]    45
-    Input Text    //*[@id="postcode"]    ${postcode}
-    Select From List By Index    //*[@id="id_country"]    1
-    Input Text    //*[@id="phone_mobile"]    ${mobile}
+    Wait Until Element Is Enabled    ${formBox}
+    Input Text    ${firstnameElement}    ${firstname}
+    Input Text    ${lastnameElement}    ${lastname}
+    Input Text    ${passwordElement}    ${passwordNew}
+    Input Text    ${addressElement}    ${address}
+    Input Text    ${cityElement}    ${City}
+    Select From List By Index    ${stateElement}    45
+    Input Text    ${postcodeElement}    ${postcode}
+    Select From List By Index    ${countryElement}    1
+    Input Text    ${mobileElement}    ${mobile}
+
+Submit Account
+    Click Button    ${submitAccount}
